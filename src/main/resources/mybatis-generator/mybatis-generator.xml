@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!-- 配置生成器 -->
+<generatorConfiguration>
+    <context id="MysqlTables" targetRuntime="MyBatis3">
+        <!-- jdbc连接:数据库的账号密码 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/miaosha" userId="root" password="etoak" />
+        <!-- 生成dataObject地址 -->
+        <javaModelGenerator targetPackage="com.lnsoft.dataobject" targetProject="src/main/java" >
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- 生成映射文件 -->
+        <sqlMapGenerator targetPackage="mappers" targetProject="src/main/resources" >
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+        <!-- 生成Dao文件 -->
+        <javaClientGenerator targetPackage="com.lnsoft.mapper" targetProject="src/main/java" type="XMLMAPPER" >
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+        <!-- 生成对应表及类 -->
+        <!--  domainObjectName="userTestDTO" table可以有多个,每个数据库中的表都可以写一个table，tableName表示要匹配的数据库表,也可以在tableName属性中通过使用%通配符来匹配所有数据库表,只有匹配的表才会自动生成文件 -->
+        <!--<table tableName="sequence_info" domainObjectName="SequenceInfoDo"/>-->
+        <table tableName="promo" domainObjectName="PromoInfoDo"/>
+        <!--<table tableName="item_stock" domainObjectName="ItemStockDO"/>-->
+    </context>
+</generatorConfiguration>

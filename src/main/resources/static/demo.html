@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品列表浏览</title>
+</head>
+<script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="css/main.css">
+
+<body>
+<form name="form1" action="test.html" method="post">
+    <input type="text" name="tname" value="2" id="tid_1"><br>
+    <input type="text" name="tname" value="传智播客5周年_2" id="tid_2"><br>
+    <input type="text" name="tname" value="传智播客5周年_3" id="tid_3"><br>
+    <input type="button" name="ok" value="保存1"/>
+</form>
+
+<select name="edu" id="edu">
+    <option value="博士">博士^^^^^</option>
+    <option value="硕士">硕士^^^^^</option>
+    <option value="本科" selected="selected">本科^^^^^</option>
+    <option value="幼儿园">幼儿园^^^^^</option>
+</select>
+
+<select name="job" id="job">
+    <option value="美容">美容^^^^^</option>
+    <option value="IT">IT^^^^^</option>
+    <option value="程序员">程序员^^^^^</option>
+    <option value="建筑师">建筑师^^^^^</option>
+</select>
+<ul>
+    <li id="abc" value="3"></li>
+</ul>
+<script type="text/javascript">
+    var var1 = document.getElementById("job");
+
+    var var6 = var1.parentNode;
+    var var5 = var1.childNodes[2];
+    var var7 = var5.parentNode[2].value;
+
+    var var8 = document.getElementById("abc");
+    var var9 = var8.getAttribute("value");
+    var8.setAttribute("value", "zz");
+    var var10 = var8.getAttribute("value");
+    //var var2=var1.nodeName;
+    //    var var3=var1.nodeValue;
+    //    var var4=var1.nodeType;
+
+
+    for (var i = 1; i < 10; i++) {
+        // console.log(i);
+    }
+
+    //=========闭包=============
+    function foo() {
+        var num = Math.random();
+
+        function f() {
+            return num;
+        }
+
+        return f;
+    }
+
+    var f = foo();
+    var test1 = f();
+    var test2 = f();
+    console.log(test1 + "\n" + test2);
+
+    function foo_new() {
+        var num = Math.random();
+
+        return function f() {
+            return num;
+        }
+    }
+    var f_new = foo_new();
+    var test3 = f_new();
+    var test4 = f_new();
+    console.log(test3 + "\n" + test4);
+    //闭包返回对象
+    function foo2() {
+        var num1 = Math.random();
+        var num2 = Math.random();
+        return {
+            r_num1: function () {
+                return num1;
+            },
+            r_num2: function () {
+                return num2;
+            }
+        };
+    }
+    var ff=foo2();
+    var rNum1 = ff.r_num1();
+    var rNum2 = ff.r_num2();
+    console.log(rNum1+"\n"+rNum2);
+</script>
+</body>
+</html>
