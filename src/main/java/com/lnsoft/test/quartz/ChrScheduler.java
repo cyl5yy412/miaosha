@@ -26,7 +26,7 @@ public class ChrScheduler {
                         .withIntervalInSeconds(5)
                         .repeatForever()).build();
 
-        //SchedulerFactory
+        //SchedulerFactory:调度工厂
         SchedulerFactory schedulerFactory = new StdSchedulerFactory();
 
         //Scheduler：谁来指挥，单例，必定有API
