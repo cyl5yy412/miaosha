@@ -149,6 +149,7 @@
                         }
                     }
                 },
+                //以写dataType: "json",如果未写返回json，则走error
                 error: function (data) {
                     alert("下单失败2,原因：" + data.responseText);
                 },
