@@ -9,9 +9,7 @@ import com.lnsoft.service.model.OrderModel;
 import com.lnsoft.service.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -20,12 +18,14 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 @RequestMapping("/order")
+@CrossOrigin(allowCredentials = "true", allowedHeaders = "*")
 public class OrderController extends BaseController {
 
     @Autowired
     private OrderService orderService;
 
     //封装下单请求
+    @ResponseBody
     @RequestMapping(value = "/createOrder", method = {RequestMethod.POST}, consumes = {CONTENT_TYPE_FORMED})
     public ReturnResult createOrder(@RequestParam("itemId") Integer itemId,//
                                     @RequestParam("amount") Integer amount,//
