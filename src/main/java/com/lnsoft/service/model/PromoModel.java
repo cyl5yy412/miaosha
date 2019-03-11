@@ -5,6 +5,8 @@ import org.joda.time.DateTime;
 import java.math.BigDecimal;
 
 /**
+ * 秒杀模型
+ * <p>
  * Created By Chr on 2019/1/9/0009.
  */
 public class PromoModel {
