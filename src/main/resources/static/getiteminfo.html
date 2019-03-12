@@ -10,7 +10,7 @@
 <script src="js/main.js"></script>
 <script src="js/plugins/pace.min.js"></script>
 <!-- Main CSS-->
-<!--<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>-->
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
 <link rel="stylesheet" type="text/css" href="css/main.css">
 
 <body>
@@ -74,13 +74,62 @@
                         <input type="button" id="createOrder" value="下单" class="btn btn-primary"/>
                     </div>
                 </div>
+                <!-- ==================后来添加的================= -->
+                <div>
+                    <div style="margin-left: 50%">
+                        <input type="button" id="addCart" value="添加购物车" class="btn btn-dark"/>
+                    </div>
+                </div>
+                <div>
+                    <div style="margin-left: 50%">
+                        <input type="button" id="getCart" value="查看购物车" class="btn badge-info"/>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
+    //查看购物车
+    $("#getCart").on("click", function () {
+        $.ajax({
+            url: "/cart/cartInfo",
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                if (data.status == "success") {
+                    window.location.href = "cartinfo.html";
+                }
+            },
+            error: function (data) {
+                alert("查看购物车失败,原因：" + data.responseText);
+            }
+        });
+    });
+    //添加购物车
+    $("#addCart").on("click", function () {
+        $.ajax({
+            url: "/cart/add",
+            type: "post",
+            data: {
+                "itemId": getParam("id"),
+                "num": 1
+            },
+            dataType: "json",
+            success: function (data) {
+                alert(data.status);
+                if (data.status == "success") {
+                    window.location.href = "itemlist.html";
+                }
+            },
+            error: function (data) {
+                alert("添加购物车失败,原因：" + data.responseText);
+            }
+        })
+    });
 
+    <!-- ===========================后来添加的=========================== -->
     //解析url路径得到id属性
     function getParam(paramName) {
         paramValue = "", isFound = !1;
