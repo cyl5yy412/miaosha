@@ -21,13 +21,13 @@ public class BaseController {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public Object handlerException(HttpServletRequest request, Exception ex) {
+    public Object handlerException(HttpServletRequest request, Exception ex) {//该ex就是未被吸收的exception
         Map<String, Object> responseData = new HashMap<>();
-        if (ex instanceof ResponseException) {
+        if (ex instanceof ResponseException) {//如果该异常是自己定义的异常
             ResponseException responseException = (ResponseException) ex;
             responseData.put("errorCode", responseException.getErrorCode());
             responseData.put("errorMessage", responseException.getErrorMessage());
-        } else {
+        } else {//如果该异常不是自己定义的
             responseData.put("errorCode", EnumError.UNKNOW_ERROR.getErrorCode());
             responseData.put("errorMessage", EnumError.UNKNOW_ERROR.getErrorMessage());
         }
