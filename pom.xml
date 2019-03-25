@@ -128,7 +128,7 @@
         该插件配置项直到被引用时才会被解析或绑定到生命周期。
         给定插件的任何本地配置都会覆盖这里的配置
         -->
-        <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+        <!--<pluginManagement>-->
             <plugins>
                 <plugin>
                     <artifactId>maven-clean-plugin</artifactId>
@@ -224,6 +224,6 @@
                 </plugin>
 
             </plugins>
-        </pluginManagement>
+        <!--</pluginManagement>-->
     </build>
 </project>
