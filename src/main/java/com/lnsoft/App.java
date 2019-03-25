@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication(scanBasePackages = {"com.lnsoft"})
 @MapperScan("com.lnsoft.mapper")
 @RestController
-public class App {
+public class App extends SpringBootServletInitializer {
 
     @Autowired
     private UserInfoDOMapper userInfoDOMapper;
@@ -34,5 +36,11 @@ public class App {
     public static void main(String[] args) {
         System.out.println("Hello World!");
         SpringApplication.run(App.class, args);
+    }
+
+    @Override//为了打包springboot项目
+    protected SpringApplicationBuilder configure(
+            SpringApplicationBuilder builder) {
+        return builder.sources(this.getClass());
     }
 }

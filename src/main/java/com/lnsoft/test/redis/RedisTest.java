@@ -4,8 +4,11 @@ import com.alibaba.fastjson.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,11 +21,25 @@ public class RedisTest {
     @Autowired
     private RedisUtilImpl redisUtill;
 
+    @Resource
+    private RedisTemplate<String, Object> redisTemplate;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
     private static final Logger logger = LoggerFactory.getLogger(RedisTest.class);
+
+
+    public void show() {
+        stringRedisTemplate.opsForHash().put("Chr", "234", "YuLin");
+        Object chr = stringRedisTemplate.opsForHash().get("chr", "234");
+        System.out.println(chr);
+    }
+
 
     public List<String> get() {
         String SS = "123345";
-        List<String> strings=new ArrayList<String>();
+        List<String> strings = new ArrayList<String>();
         String s = redisUtill.get(SS);
         if (null != s) {
             logger.info("cache value-----------------------------------", s);

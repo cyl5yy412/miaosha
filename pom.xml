@@ -2,20 +2,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>com.lnsoft</groupId>
-    <artifactId>miaosha</artifactId>
-    <version>1.0-SNAPSHOT</version>
-
-    <name>miaosha</name>
-    <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.5.9.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+    <groupId>com.lnsoft</groupId>
+    <artifactId>miaosha</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>miaosha</name>
+    <!-- FIXME change it to the project's website -->
+    <!--<url>http://www.example.com</url>-->
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -114,19 +114,26 @@
             <artifactId>quartz</artifactId>
             <version>2.2.1</version>
         </dependency>
-
+        <!--引入spring-data-es的依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+        </dependency>
 
     </dependencies>
 
     <build>
+        <!-- 加上pluginManagement会使jar中没有主清单属性
+        子项目可以引用的默认插件信息。
+        该插件配置项直到被引用时才会被解析或绑定到生命周期。
+        给定插件的任何本地配置都会覆盖这里的配置
+        -->
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
             <plugins>
-                <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
                 <plugin>
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>3.1.0</version>
                 </plugin>
-                <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
                 <plugin>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>3.0.2</version>
@@ -151,7 +158,6 @@
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>2.8.2</version>
                 </plugin>
-                <!-- site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->
                 <plugin>
                     <artifactId>maven-site-plugin</artifactId>
                     <version>3.7.1</version>
@@ -199,6 +205,24 @@
                         </configurationFile>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <!-- 				默认情况下，打包之后，是直接将devgtools排除在歪的 -->
+                    <!-- 				但是加了这个东东之后，就会将devtools给打到jar包里去，部署到服务器上之后，devtools生效的 -->
+                   <!-- <configuration>
+                        <excludeDevtools>false</excludeDevtools>
+                        <mainClass>com.lnsoft.App</mainClass>
+                    </configuration>-->
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
             </plugins>
         </pluginManagement>
     </build>
