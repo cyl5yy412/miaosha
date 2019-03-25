@@ -130,6 +130,7 @@
         -->
         <!--<pluginManagement>-->
             <plugins>
+                <!-- 下列插件是maven的单个插件的配置 -->
                 <plugin>
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>3.1.0</version>
@@ -205,6 +206,7 @@
                         </configurationFile>
                     </configuration>
                 </plugin>
+                <!-- 这是springboot的maven的插件 -->
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
