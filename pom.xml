@@ -115,10 +115,10 @@
             <version>2.2.1</version>
         </dependency>
         <!--引入spring-data-es的依赖-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-data-elasticsearch</artifactId>-->
+        <!--</dependency>-->
         <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>

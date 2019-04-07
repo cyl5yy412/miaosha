@@ -2,6 +2,7 @@ package com.lnsoft.controller;
 
 import com.alibaba.druid.util.StringUtils;
 import com.lnsoft.controller.viewobject.UserVo;
+import com.lnsoft.response.ChrReturnResult;
 import com.lnsoft.response.ReturnResult;
 import com.lnsoft.response.error.BaseController;
 import com.lnsoft.response.error.EnumError;
@@ -175,9 +176,11 @@ public class UserController extends BaseController {
 
     //测试@PathVariable
     @RequestMapping("/{page}/{message}/{test}")
-    public void mapp(@PathVariable String page,@PathVariable String message,@PathVariable String test){
+    @ResponseBody
+    public ChrReturnResult mapp(@PathVariable String page, @PathVariable String message, @PathVariable String test){
         System.err.println(page);
         System.err.println(message);
         System.err.println(test);
+        return ChrReturnResult.create(page+"=="+message+"=="+test);
     }
 }

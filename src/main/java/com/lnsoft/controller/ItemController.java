@@ -29,7 +29,7 @@ public class ItemController extends BaseController {
     @Autowired
     private ItemService itemService;
 
-    //测试spring提供的替补机制，返回Callable方式
+    //测试spring提供的异步机制，返回Callable方式
     @RequestMapping("/testC")
     @ResponseBody
     public Callable<ReturnResult> testC() {
