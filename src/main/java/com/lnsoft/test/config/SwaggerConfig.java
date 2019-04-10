@@ -51,6 +51,7 @@ public class SwaggerConfig {
                 .select()
                 //需要指定包结构，而不需要制定到具体的controller类中
                 .apis(RequestHandlerSelectors.basePackage("com.lnsoft.test.sign"))
+//                .apis(RequestHandlerSelectors.basePackage("com.lnsoft.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
