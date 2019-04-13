@@ -7,6 +7,10 @@ import com.lnsoft.response.error.ResponseException;
 import com.lnsoft.service.OrderService;
 import com.lnsoft.service.model.OrderModel;
 import com.lnsoft.service.model.UserModel;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +18,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 
 /**
+ * 订单接口
+ * <p>
  * Created By Chr on 2019/1/7/0007.
  */
+@Api(value = "订单接口", description = "该接口为下单接口")
 @Controller
 @RequestMapping("/order")
 @CrossOrigin(allowCredentials = "true", allowedHeaders = "*")
@@ -24,7 +31,13 @@ public class OrderController extends BaseController {
     @Autowired
     private OrderService orderService;
 
-    //封装下单请求
+    //封装下单请求2
+    @ApiOperation(value = "根据商品判断是否为秒杀商品的下单", notes = "普通商品和秒杀活动商品的下单接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "itemId", value = "商品id", required = true, dataType = "Integer"),
+            @ApiImplicitParam(paramType = "query", name = "amount", value = "商品数量", required = true, dataType = "Integer"),
+            @ApiImplicitParam(paramType = "query", name = "promoId", value = "秒杀商品id", required = true, dataType = "Integer"),
+    })
     @ResponseBody
     @RequestMapping(value = "/createOrder", method = {RequestMethod.POST}, consumes = {CONTENT_TYPE_FORMED})
     public ReturnResult createOrder(@RequestParam("itemId") Integer itemId,//

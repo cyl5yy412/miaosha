@@ -6,6 +6,10 @@ import com.lnsoft.response.error.BaseController;
 import com.lnsoft.response.error.ResponseException;
 import com.lnsoft.service.ItemService;
 import com.lnsoft.service.model.ItemModel;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +23,11 @@ import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 
 /**
+ * 获取商品接口
+ * <p>
  * Created by chr on 2019/1/1/0001.
  */
+@Api(value = "商品信息接口", description = "主要是：商品列表页/商品详情页的浏览/创建商品")
 @Controller
 @RequestMapping("/item")
 @CrossOrigin(allowCredentials = "true", allowedHeaders = "*")
@@ -30,7 +37,8 @@ public class ItemController extends BaseController {
     private ItemService itemService;
 
     //测试spring提供的异步机制，返回Callable方式
-    @RequestMapping("/testC")
+    @ApiOperation(value = "测试接口", notes = "该接口为测试spring异步机制")
+    @RequestMapping(value = "/testC", method = RequestMethod.GET)
     @ResponseBody
     public Callable<ReturnResult> testC() {
         Callable<ReturnResult> callable = new Callable<ReturnResult>() {
@@ -48,6 +56,7 @@ public class ItemController extends BaseController {
     }
 
     //商品列表页
+    @ApiOperation(value = "获得商品列表", notes = "该接口为获得所有商品列表的接口")
     @RequestMapping(value = "itemList", method = RequestMethod.GET)
     @ResponseBody
     public ReturnResult itemList() {
@@ -63,6 +72,8 @@ public class ItemController extends BaseController {
     }
 
     //商品详情页的浏览
+    @ApiOperation(value = "获得单个商品的详细信息", notes = "展示商品信息")
+    @ApiImplicitParam(paramType = "query", name = "id", value = "商品id", required = true, dataType = "Integer")
     @RequestMapping(value = "getItem", method = RequestMethod.GET)
     @ResponseBody
     public ReturnResult getItem(@RequestParam(name = "id") Integer id) {
@@ -72,6 +83,14 @@ public class ItemController extends BaseController {
     }
 
     //创建商品
+    @ApiOperation(value = "创建商品", notes = "新增商品")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "title", value = "商品名字", required = true, dataType = "String"),
+            @ApiImplicitParam(paramType = "query", name = "price", value = "商品价格", required = true, dataType = "BigDecimal"),
+            @ApiImplicitParam(paramType = "query", name = "description", value = "商品描述", required = true, dataType = "String"),
+            @ApiImplicitParam(paramType = "query", name = "stock", value = "商品库存", required = true, dataType = "Integer"),
+            @ApiImplicitParam(paramType = "query", name = "imgUrl", value = "商品图片url", required = true, dataType = "String"),
+    })
     @RequestMapping(value = "createItem", method = RequestMethod.POST)
     @ResponseBody
     public ReturnResult createItem(@RequestParam(name = "title") String title,//

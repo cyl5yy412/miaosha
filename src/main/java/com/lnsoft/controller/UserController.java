@@ -9,6 +9,10 @@ import com.lnsoft.response.error.EnumError;
 import com.lnsoft.response.error.ResponseException;
 import com.lnsoft.service.UserService;
 import com.lnsoft.service.model.UserModel;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +30,7 @@ import java.util.Random;
 /**
  * Created by chr on 2018/12/30/0030.
  */
+@Api(value = "user用户信息", description = "user用户注册/登录/短信验证")
 @Controller
 @RequestMapping("/user")
 //allowCredentials ="true" 需要在前端设置xhrFields属性（格式：xhrFields:{withCredentials:true},），需要前后端呼应起来（前后端都需要设置相对应的属性true），才能授权session跨域共享
@@ -38,25 +43,39 @@ public class UserController extends BaseController {
     private UserService userService;
 
     //用户登录接口
+    @ApiOperation(value = "用户登录", notes = "用户登录：用户名/密码")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "telPhone", value = "手机号码", required = true, dataType = "String"),
+            @ApiImplicitParam(paramType = "query", name = "password", value = "密码", required = true, dataType = "String"),
+    })
     @RequestMapping(value = "/login", method = {RequestMethod.POST})
     @ResponseBody
     public ReturnResult login(@RequestParam(name = "telPhone") String telPhone,//
                               @RequestParam(name = "password") String password,//
                               HttpSession session) throws ResponseException, UnsupportedEncodingException, NoSuchAlgorithmException {
         //入参校验
-        if(org.apache.commons.lang3.StringUtils.isEmpty(telPhone)){
+        if (org.apache.commons.lang3.StringUtils.isEmpty(telPhone)) {
             throw new ResponseException(EnumError.PARAMETER_VALIDATION_ERROR);
         }
         //用户登录流程，校验用户登录是否合法
-        UserModel userModel=userService.validateLogin(telPhone,this.EncodeByMD5(password));
+        UserModel userModel = userService.validateLogin(telPhone, this.EncodeByMD5(password));
         //登录凭证加入到用户登录成功的session内,userModel信息放入到session
-        session.setAttribute("IS_LOGIN",true);
-        session.setAttribute("LOGIN_USER",userModel);
+        session.setAttribute("IS_LOGIN", true);
+        session.setAttribute("LOGIN_USER", userModel);
 
         return ReturnResult.create(null);
     }
 
     //用户注册接口
+    @ApiOperation(value = "用户注册", notes = "用户注册接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "telPhone", value = "手机号码", required = true, dataType = "String"),
+            @ApiImplicitParam(paramType = "query", name = "otpCode", value = "验证码", required = true, dataType = "String"),
+            @ApiImplicitParam(paramType = "query", name = "name", value = "用户名", required = true, dataType = "String"),
+            @ApiImplicitParam(paramType = "query", name = "age", value = "年龄", required = true, dataType = "Integer"),
+            @ApiImplicitParam(paramType = "query", name = "gender", value = "性别", required = true, dataType = "Integer"),
+            @ApiImplicitParam(paramType = "query", name = "password", value = "密码", required = true, dataType = "String"),
+    })
     @RequestMapping(value = "/register", method = {RequestMethod.POST})
     @ResponseBody
     public ReturnResult register(@RequestParam(name = "telPhone") String telPhone,//
@@ -100,6 +119,8 @@ public class UserController extends BaseController {
     }
 
     //用户获取otp短信接口
+    @ApiOperation(value = "短信登陆接口", notes = "用户登录短信接口")
+    @ApiImplicitParam(paramType = "query", name = "telPhone", value = "手机号码", required = true, dataType = "String")
     @RequestMapping(value = "/getOtp", method = {RequestMethod.POST})
     @ResponseBody
     public ReturnResult getOtp(@RequestParam(name = "telPhone") String telPhone, HttpServletRequest httpServletRequest, HttpServletResponse resp) {
@@ -151,7 +172,9 @@ public class UserController extends BaseController {
         return ReturnResult.create(null);
     }
 
-    @RequestMapping("/get")
+    @ApiOperation(value = "获得用户id", notes = "根据用户id获得用户数据")
+    @ApiImplicitParam(paramType = "query", name = "id", value = "用户id", required = true, dataType = "Integer")
+    @RequestMapping(value = "/get",method = RequestMethod.GET)
     @ResponseBody
     public ReturnResult getUser(@RequestParam(name = "id") Integer id) throws ResponseException {
         UserModel userModel = userService.getUserById(id);
@@ -175,12 +198,19 @@ public class UserController extends BaseController {
     }
 
     //测试@PathVariable
-    @RequestMapping("/{page}/{message}/{test}")
+    @ApiOperation(value = "测试restful", notes = "测试接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", name = "page", value = "模拟测试page", required = true, dataType = "String"),
+            @ApiImplicitParam(paramType = "path", name = "message", value = "模拟测试message", required = true, dataType = "String"),
+            @ApiImplicitParam(paramType = "path", name = "test", value = "模拟测试test", required = true, dataType = "String"),
+
+    })
+    @RequestMapping(value = "/{page}/{message}/{test}", method = RequestMethod.GET)
     @ResponseBody
-    public ChrReturnResult mapp(@PathVariable String page, @PathVariable String message, @PathVariable String test){
+    public ChrReturnResult mapp(@PathVariable String page, @PathVariable String message, @PathVariable String test) {
         System.err.println(page);
         System.err.println(message);
         System.err.println(test);
-        return ChrReturnResult.create(page+"=="+message+"=="+test);
+        return ChrReturnResult.create(page + "==" + message + "==" + test);
     }
 }
