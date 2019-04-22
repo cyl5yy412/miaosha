@@ -11,8 +11,6 @@ public class ExecutorTest {
         ExecutorService executorService = Executors.newFixedThreadPool(3);
 
 
-
-
         //submit
         Future<String> future = executorService.submit(new Callable<String>() {
             @Override
@@ -22,6 +20,11 @@ public class ExecutorTest {
             }
         });
 
+//        System.out.println(future.isDone());
+//        System.out.println(future.isCancelled());
+//        System.out.println(future.get());
+//        System.out.println(future.cancel());
+//        System.out.println(future.get());
 
         //futureTask
         FutureTask<String> future2 = new FutureTask<String>(new Callable<String>() {
@@ -39,6 +42,19 @@ public class ExecutorTest {
             return "a";
         });
         executorService.execute((Runnable) future3);
+
+
+        //thread
+
+        Callable<String> callable = new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                System.out.println("e");
+                return "e";
+            }
+        };
+        FutureTask futureTask = new FutureTask(callable);
+        executorService.submit(futureTask);
 
     }
 
