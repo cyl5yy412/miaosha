@@ -30,6 +30,7 @@ public class ExecutorTest {
                 return "c";
             }
         });
+        executorService.submit(future2);
 
 
         //future
