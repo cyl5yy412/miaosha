@@ -42,6 +42,9 @@ public class EnTest {
         return encode;
     }
 
+//    为应用程序提供信息摘要算法的功能，如 MD5 或 SHA 算法。简单点说就是用于生成散列码。
+// 信息摘要是安全的单向哈希函数，它接收随意大小的数据，输出固定长度的哈希值
+
     //md5算法
     public static String md5(String s) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         MessageDigest md5 = MessageDigest.getInstance("MD5");
