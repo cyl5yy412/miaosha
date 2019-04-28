@@ -25,5 +25,10 @@ public class JZTest {
         System.out.println(i1);
 
 
+
+        //2进制-->10进制,返回int
+        int i2 = Integer.parseInt(i1, 2);
+        System.out.println(i2);
+
     }
 }
