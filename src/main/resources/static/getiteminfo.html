@@ -184,7 +184,7 @@
                     "promoId": g_itemVo.promoId,
                 },
                 dataType: "json",
-                //Ajax跨域注解
+                //Ajax跨域注解:session跨域可受性
                 xhrFields: {withCredentials: true},
                 success: function (data) {
                     if (data.status == "success") {
