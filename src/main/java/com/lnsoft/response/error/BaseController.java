@@ -15,11 +15,11 @@ import java.util.Map;
  */
 public class BaseController {
 
-    public static final String CONTENT_TYPE_FORMED="application/x-www-form-urlencoded";
+    public static final String CONTENT_TYPE_FORMED = "application/x-www-form-urlencoded";
 
     //定义ExceptionHandler解决未被Controller层吸收的Exception
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.OK)//异常返回也处理为200,只要是接口响应就是200,除非接口无法返回
+    @ResponseStatus(HttpStatus.OK)//异常返回也处理为200,只要是接口响应就是200,除非接口无法返回(或者使用500代表返回的信息为异常信息)
     @ResponseBody
     public Object handlerException(HttpServletRequest request, Exception ex) {//该ex就是未被吸收的exception
         Map<String, Object> responseData = new HashMap<>();
